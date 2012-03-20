@@ -24,7 +24,7 @@
 </center>
 
 <script>
-var socket = io.connect('http://localhost')
+var socket = io.connect()
 
 socket.on('booky', function (data) {
 	$('ul').prepend('<li><a href="' + data.href +'">' + data.title + '</a></li>')
