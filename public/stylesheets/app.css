@@ -1,0 +1,41 @@
+@import "../bootstrap/css/bootstrap.css";
+
+body {
+	background: #2B2B2B url(/images/bg.gif);
+	color: #cecece;
+	text-shadow: 0 1px 1px rgba(0,0,0,.75);
+}
+
+body, p, h1, h2, h3, h4, h5, h6 {
+	font-family: "Varela Round", "helvetica neue", arial, helvetica, sans-serif;
+	color: #cecece;
+}
+
+h1 {
+	font-size:64px;
+	line-height:70px;
+	font-weight:normal;
+	margin: 30px 0;
+}
+
+
+li a {
+	font-size:18px;
+	line-height:26px;
+	color:#49adc1;
+}
+
+li a:hover {
+	color: #f48866;
+	text-decoration:none;
+}
+
+ul {
+	margin: 40px 0;
+	padding-left: 310px;
+}
+
+p.alert {
+	width:300px;
+	display:none;
+}
