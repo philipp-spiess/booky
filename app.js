@@ -6,12 +6,9 @@ var express = require('express')
   , routes = require('./routes');
 
 var app = module.exports = express.createServer();
-
-
 var io = require('socket.io').listen(app);
 
 // Configuration
-
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
@@ -37,7 +34,6 @@ app.get('/', routes.index);
 
 app.listen(80);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-
 
 bookies = [], user = []
 
