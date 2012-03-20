@@ -19,23 +19,37 @@ h1 {
 }
 
 
-li a {
+a {
 	font-size:18px;
 	line-height:26px;
 	color:#49adc1;
 }
 
-li a:hover {
+a:hover {
 	color: #f48866;
 	text-decoration:none;
 }
 
 ul {
 	margin: 40px 0;
-	padding-left: 310px;
+	padding-left: 50px;
 }
 
 p.alert {
 	width:300px;
 	display:none;
+}
+
+.wrapper {
+	width:380px;
+	margin:0 auto;
+}
+
+footer {
+	text-align:center;
+}
+
+footer a {
+	font-size:13px;
+	line-height:16px;
 }
