@@ -6,7 +6,7 @@ var express = require('express')
   , routes = require('./routes');
 
 var app = module.exports = express.createServer();
-var io = require('socket.io').listen(app);
+//var io = require('socket.io').listen(app);
 
 // Configuration
 app.configure(function(){
@@ -40,7 +40,7 @@ String.prototype.isUrl = function() {
   var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
   return regexp.test(this)
 }
-
+/*
 io.sockets.on('connection', function (socket) {
   user.push(socket);
   socket.on('disconnect', function(socket) {
@@ -56,4 +56,4 @@ io.sockets.on('connection', function (socket) {
       }
     }
   })
-});
+});*/
