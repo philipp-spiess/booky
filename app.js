@@ -6,8 +6,8 @@ var express = require('express')
   , routes = require('./routes')
   , fs = require('fs');
 
-var app = module.exports = express.createServer();
-var io = require('socket.io').listen(app);
+var app = module.exports = express.createServer()
+bookies = null
 
 // Configuration
 app.configure(function(){
@@ -35,22 +35,14 @@ app.get('/', routes.index);
 app.listen(process.env.PORT || 3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
-Array.prototype.save = function() {
-  var s = JSON.stringify(this)
-  fs.writeFile('bookies.json', s, console.log)
-}
+var db = require('json-db').listen(app, {port: process.env.PORT || 3000, publicRead: true }).local(),
+    io = require('socket.io').listen(app);
 
+db.client(function(c) {
+  bookies = c.select('bookies')
+})
 
-var loadBookies =  function() {
-  fs.readFile('bookies.json', function(err, data) {
-    if(!err) {
-      bookies = JSON.parse(data)
-    }
-  })
-}
-
-bookies = [], user = []
-loadBookies()
+sockets = []
 
 String.prototype.isUrl = function() {
   var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
@@ -58,19 +50,18 @@ String.prototype.isUrl = function() {
 }
 
 io.sockets.on('connection', function (socket) {
-  user.push(socket);
+  sockets.push(socket);
   socket.on('disconnect', function(socket) {
-    var index = user.indexOf(socket)
-    user.splice(index, 1)
+    var index = sockets.indexOf(socket)
+    sockets.splice(index, 1)
   })
 
   socket.on('booky', function (data) {
     if(data.href.isUrl() && data.title.length > 0) {
       data.date = new Date()
       bookies.push(data)
-      bookies.save()
-      for(var i = 0; i < user.length; i++) {
-        user[i].emit('booky', data)
+      for(var i = 0; i < sockets.length; i++) {
+        sockets[i].emit('booky', data)
       }
     }
   })

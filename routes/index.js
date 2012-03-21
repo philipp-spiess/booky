@@ -4,5 +4,8 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Booky' })
+	bookies.all(function(err, obj) {
+		the_bookies = obj
+		res.render('index', { title: 'Booky' })
+	})
 };
