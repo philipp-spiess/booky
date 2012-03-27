@@ -11,6 +11,7 @@ Feel free to try it out on [Heroku](https://booky.herokuapp.com).
 And don't forget to look at the screenshot.
 
 ![Booky](http://dl.dropbox.com/u/16019885/booky.PNG)
+
 (Sorry, the next screenshot will be done on a Mac!)
 
 ## Run Local ##
