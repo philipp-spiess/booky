@@ -6,6 +6,11 @@ body {
 	text-shadow: 0 1px 1px rgba(0,0,0,.75);
 }
 
+header {
+	margin:0 auto;
+	text-align:center;
+}
+
 body, p, h1, h2, h3, h4, h5, h6 {
 	font-family: "Varela Round", "helvetica neue", arial, helvetica, sans-serif;
 	color: #cecece;
@@ -45,11 +50,20 @@ p.alert {
 	margin:0 auto;
 }
 
-footer {
-	text-align:center;
+.twitter-connect {
+	display:block;
+	width:151px;
+	height:24px;
+	background:url(/images/sign-in-with-twitter-d.png);
+	margin-bottom:20px;
 }
 
-footer a {
-	font-size:13px;
-	line-height:16px;
+a.fork-me {
+	width:141px;
+	height:141px;
+	display:block;
+	background:url(/images/ForkMe_Blk.png);	
+	position:absolute;
+	top:0;
+	left:0;
 }
