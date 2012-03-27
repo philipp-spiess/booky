@@ -6,7 +6,7 @@
     "ejs" : ">= 0.0.1",
     "socket.io" : ">= 0.0.1",
     "oauth" : ">= 0.0.1",
-    "mongoose" : ">= 0.0.1",
+    "mongoose" : "= 2.4.10",
     "underscore" : ">= 0.0.1"
   }
 }
