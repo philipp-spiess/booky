@@ -2,15 +2,7 @@
  * GET home page.
  */
 
-var oauth = require('oauth'),
-    consumer = new oauth.OAuth(
-      "https://twitter.com/oauth/request_token", 
-      "https://twitter.com/oauth/access_token", 
-      process.env.TWITTER_CONSUMER_KEY, 
-      process.env.TWITTER_CONSUMER_SECRET, 
-      "1.0A", 
-      process.env.TWITTER_CALLBACK,
-      "HMAC-SHA1")
+var consumer = require('../lib/twitter')
 
 exports.index = function(req, res) {
   Booky.find()
@@ -24,38 +16,35 @@ exports.index = function(req, res) {
   })
 }
 
-exports.connect = function(req, res) {
-  consumer.getOAuthRequestToken(function(error, oauthToken, oauthTokenSecret, results){
-    if (error) {
-      res.send("Error getting OAuth request token", 500);
-      console.log(error)
-    } else {  
-      req.session.oauthRequestToken = oauthToken;
-      req.session.oauthRequestTokenSecret = oauthTokenSecret;
-      res.redirect("https://twitter.com/oauth/authorize?oauth_token="+req.session.oauthRequestToken);      
-    }
-  });
+exports.bookies = function(req, res) {
+  Booky.find()
+       .sort('date', -1)
+       .execFind(function(err, docs) {
+    res.header('Content-Type', 'application/json')
+    res.send(JSON.stringify(docs))
+  })
 }
 
-exports.callback = function(req, res) {
-  consumer.getOAuthAccessToken(req.session.oauthRequestToken, req.session.oauthRequestTokenSecret, req.query.oauth_verifier, function(error, oauthAccessToken, oauthAccessTokenSecret, results) {
-    if (error) {
-      res.send("Error getting OAuth access token")
-      console.log(error)
-    } else {
-      req.session.oauthAccessToken = oauthAccessToken
-      req.session.oauthAccessTokenSecret = oauthAccessTokenSecret
-      
-       consumer.get("http://twitter.com/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
-        if (error) {
-          res.send("Error getting Twitter Username")
-          console.log(error)
-        } else {
-          var parsedData = JSON.parse(data)
-          req.session.name = parsedData.screen_name
-          res.redirect("/")
-        } 
-      });
-    }
-  });
+exports.connect = require('./connect')
+
+exports.callback = require('./callback')
+
+exports.bookiesPost = function(req, res) {
+  try {
+    booky = new Booky({
+      title: req.body.booky.title,
+      href: req.body.booky.href
+    })
+
+    booky.save(function(err) {
+      if(err) {
+        res.send(JSON.stringify({error:err}))
+      } else {
+        res.send(JSON.stringify({success:booky}))
+        socket.broadcast('booky', booky)
+      }
+    })
+  } catch(e) {
+    res.send(JSON.stringify({error:e}))
+  }
 }

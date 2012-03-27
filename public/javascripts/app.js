@@ -1,25 +1,32 @@
 var socket = io.connect()
 
 socket.on('booky', function (data) {
-  $('ul').prepend('<li><a href="' + data.href +'">' + data.title + '</a></li>')
+  $('ul').prepend('<li><a href="' + data.href +'">' + data.title.replace('<', '&lt;') + '</a></li>')
 });
 
-String.prototype.isUrl = function() {
-  var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-  return regexp.test(this)
-}
-
-$(function(){
+$(function() {
   $('form').submit(function() {
+
+    $('button').attr('disabled', true);
+
     var href = $('#href').val(),
         title = $('#title').val()
 
-    if(href.isUrl() && title.length > 0) {
-      $('p.alert').fadeOut()    
-      socket.emit('booky', {href : href, title: title })
-    } else {
-      $('p.alert').fadeIn()
-    }
+    $.post('/bookies', { 
+      'booky[href]' : href,
+      'booky[title]': title
+      }, function(data) {
+        data = JSON.parse(data)
+
+        if(typeof data.error != 'undefined') {
+          $('p.alert').html(data.error.message).fadeIn()
+        } else {
+          $('#href').val('')
+          $('#title').val('')
+        }
+
+        $('button').attr('disabled', false);
+    })
 
     return false
   })
