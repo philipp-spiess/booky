@@ -2,33 +2,44 @@
 
 Booky is a light, real-time bookmark-service. It's designed to share your bookmarks online and collaborate with your friends.
 
-## Setup ##
+It uses Twitter to authorize users and MongoDB to store the data. You can deploy it onto heroku for free.
 
-First of all, make sure node.js and npm is running.
+## Demo ##
+
+Feel free to try it out on [Heroku](https://booky.herokuapp.com). 
+
+And don't forget to look at the screenshot.
+
+![Booky](http://dl.dropbox.com/u/16019885/booky.PNG)
+(Sorry, the next screenshot will be done on a Mac!)
+
+## Run Local ##
+
+First of all, make sure node.js and npm is installed and you have created a Twitter app.
 
     $ git clone git@github.com:philipp-spiess/booky.git
     $ cd booky
     $ npm install
-    $ node app.js
+    $ export MONGOHQ_URL=mongodb://localhost/db
+    $ export TWITTER_CONSUMER_KEY=key
+    $ export TWITTER_CONSUMER_SECRET=secret
+    $ export TWITTER_CALLBACK=http://localhost:3000/callback
+    $ node web
 
-## Production Setup ##
+## Deploy onto Heroku ##
 
-    $ npm install forever -g
-    $ export PORT=1337
-    $ export NODE_ENV=production
-    $ forever start app.js
+If you want to make it public, Heroku is the right solution. Please make sure you create a verified account first.
 
-And if you want apache to forward a subdomain:
+    $ git clone git@github.com:philipp-spiess/booky.git
+    $ cd booky
+    $ heroku create --stack cedar
+    $ heroku addons:add mongohq:free
+    $ heroku ps:scale web=1
+    $ heroku config:add TWITTER_CONSUMER_KEY=key
+    $ heroku config:add TWITTER_CONSUMER_SECRET=secret
+    $ heroku config:add TWITTER_CALLBACK=http:s//app.herokuapp.com/callback
+    $ git push heroku master
 
-    <VirtualHost *:80>
-      ServerAdmin booky@example.com
-      ServerName booky.example.com
-      ServerAlias booky
-      ProxyRequests Off
-      <Proxy *>
-        Order deny,allow
-        Allow from all
-      </Proxy>
-      ProxyPreserveHost on
-      ProxyPass / http://localhost:1337/
-    </VirtualHost>
+
+
+    
