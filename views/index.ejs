@@ -3,13 +3,13 @@
 </center>
 
 <ul>
-	<% for(var i = the_bookies.length - 1; i >= 0; i--) {%>
+	<% _.each(bookies, function(booky) { %>
   	<li>
-   		<a href="<%= the_bookies[i].href %>">
-   			<%= the_bookies[i].title %>
+   		<a href="<%= booky.href %>">
+   			<%= booky.title %>
    		</a>
   	 </li>
-	<% } %>
+	<% }) %>
 </ul>
 
 <center>

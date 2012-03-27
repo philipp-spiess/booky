@@ -1,10 +1,12 @@
 {
-    "name": "booky"
-  , "version": "0.0.2"
-  , "dependencies": {
-      "express": ">= 2.5.8"
-    , "ejs": ">= 0.0.1"
-    , "socket.io": ">= 0.0.1"
-    , "json-db": ">= 0.0.2"
+  "name": "booky",
+  "version": "0.0.2",
+  "dependencies": {
+    "express" : ">= 2.5.8",
+    "ejs" : ">= 0.0.1",
+    "socket.io" : ">= 0.0.1",
+    "oauth" : ">= 0.0.1",
+    "mongoose" : ">= 0.0.1",
+    "underscore" : ">= 0.0.1"
   }
 }
